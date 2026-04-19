@@ -31,9 +31,7 @@ jobs:
         run: npm run lint
 
       - name: Build
-        env:
-          # Serve under /<repo>/ for project Pages sites
-          VITE_BASE: /${{ github.event.repository.name }}/
+        # Custom domain (see public/CNAME) serves from root, so VITE_BASE stays "/"
         run: npm run build
 
       - name: SPA 404 fallback
