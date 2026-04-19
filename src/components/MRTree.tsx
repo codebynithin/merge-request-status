@@ -1,11 +1,6 @@
-import { useMemo, useState } from "react";
-import {
-  ChevronDown,
-  ChevronRight,
-  GitBranch,
-  ExternalLink,
-} from "lucide-react";
-import type { GitLabUser, MergeRequest, MergeRequestState } from "../types";
+import { useMemo, useState } from 'react';
+import { ChevronDown, ChevronRight, GitBranch, ExternalLink } from 'lucide-react';
+import type { GitLabUser, MergeRequest, MergeRequestState } from '../types';
 
 interface BranchNodeData {
   branch: string;
@@ -25,10 +20,7 @@ function buildTree(mrs: MergeRequest[]): BranchNodeData[] {
   const rootTargets = [...byTarget.keys()].filter((t) => !sourceSet.has(t));
   const roots = rootTargets.length ? rootTargets : [...byTarget.keys()];
 
-  const buildBranchNode = (
-    branch: string,
-    visited: Set<string> = new Set(),
-  ): BranchNodeData => {
+  const buildBranchNode = (branch: string, visited: Set<string> = new Set()): BranchNodeData => {
     if (visited.has(branch)) return { branch, mrs: [], cyclic: true };
     visited.add(branch);
     const list = byTarget.get(branch) || [];
@@ -47,31 +39,25 @@ function buildTree(mrs: MergeRequest[]): BranchNodeData[] {
 }
 
 function fmtDate(s?: string): string {
-  if (!s) return "";
+  if (!s) return '';
   const d = new Date(s);
   return d.toLocaleString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
   });
 }
 
-function StateBadge({
-  state,
-  draft,
-}: {
-  state: MergeRequestState;
-  draft?: boolean;
-}) {
+function StateBadge({ state, draft }: { state: MergeRequestState; draft?: boolean }) {
   const map: Record<MergeRequestState, string> = {
-    opened: "bg-emerald-500/10 text-emerald-300 border-emerald-500/30",
-    merged: "bg-indigo-500/10 text-indigo-300 border-indigo-500/30",
-    closed: "bg-rose-500/10 text-rose-300 border-rose-500/30",
-    locked: "bg-slate-500/15 text-slate-300 border-slate-500/40",
+    opened: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30',
+    merged: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30',
+    closed: 'bg-rose-500/10 text-rose-300 border-rose-500/30',
+    locked: 'bg-slate-500/15 text-slate-300 border-slate-500/40',
   };
-  const cls = map[state] || "bg-slate-700/30 text-slate-200 border-slate-700";
+  const cls = map[state] || 'bg-slate-700/30 text-slate-200 border-slate-700';
   return (
     <div className="flex items-center gap-1.5 shrink-0">
       <span className={`chip ${cls}`}>
@@ -79,9 +65,7 @@ function StateBadge({
         {state}
       </span>
       {draft && (
-        <span className="chip bg-amber-500/10 text-amber-300 border-amber-500/30">
-          draft
-        </span>
+        <span className="chip bg-amber-500/10 text-amber-300 border-amber-500/30">draft</span>
       )}
     </div>
   );
@@ -103,9 +87,7 @@ function People({ label, users }: { label: string; users?: GitLabUser[] }) {
           />
         ))}
       </div>
-      {users.length > 4 && (
-        <span className="text-slate-500">+{users.length - 4}</span>
-      )}
+      {users.length > 4 && <span className="text-slate-500">+{users.length - 4}</span>}
     </div>
   );
 }
@@ -121,9 +103,7 @@ function MRRow({ mr }: { mr: MergeRequest }) {
             rel="noreferrer"
             className="group font-medium text-slate-100 hover:text-brand-300 inline-flex items-center gap-1.5 max-w-full"
           >
-            <span className="text-slate-500 font-mono text-sm shrink-0">
-              !{mr.iid}
-            </span>
+            <span className="text-slate-500 font-mono text-sm shrink-0">!{mr.iid}</span>
             <span className="truncate">{mr.title}</span>
             <ExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-70 transition shrink-0" />
           </a>
@@ -134,9 +114,7 @@ function MRRow({ mr }: { mr: MergeRequest }) {
               <span className="text-slate-600">→</span>
               <span className="branch-label">{mr.target_branch}</span>
             </span>
-            <span className="text-slate-500">
-              updated {fmtDate(mr.updated_at)}
-            </span>
+            <span className="text-slate-500">updated {fmtDate(mr.updated_at)}</span>
           </div>
         </div>
         <StateBadge state={mr.state} draft={mr.draft || mr.work_in_progress} />
@@ -167,9 +145,7 @@ function MRRow({ mr }: { mr: MergeRequest }) {
               </span>
             ))}
             {mr.labels.length > 6 && (
-              <span className="text-[10px] text-slate-500">
-                +{mr.labels.length - 6}
-              </span>
+              <span className="text-[10px] text-slate-500">+{mr.labels.length - 6}</span>
             )}
           </div>
         )}
@@ -178,37 +154,25 @@ function MRRow({ mr }: { mr: MergeRequest }) {
   );
 }
 
-function BranchNode({
-  node,
-  depth = 0,
-}: {
-  node: BranchNodeData;
-  depth?: number;
-}) {
+function BranchNode({ node, depth = 0 }: { node: BranchNodeData; depth?: number }) {
   const [open, setOpen] = useState(true);
   const count = node.mrs.length;
   return (
-    <div className={`branch-node ${depth === 0 ? "" : "is-nested"}`}>
+    <div className={`branch-node ${depth === 0 ? '' : 'is-nested'}`}>
       <button
         onClick={() => setOpen((o) => !o)}
         className="group w-full flex items-center gap-2 text-left py-1.5 text-sm text-slate-300 hover:text-slate-100 transition"
       >
         <span className="text-slate-500 group-hover:text-slate-300 transition">
-          {open ? (
-            <ChevronDown className="w-4 h-4" />
-          ) : (
-            <ChevronRight className="w-4 h-4" />
-          )}
+          {open ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
         </span>
         <GitBranch className="w-4 h-4 text-brand-400/80" />
         <span className="branch-label">{node.branch}</span>
         <span className="text-xs text-slate-500">
-          {count} MR{count === 1 ? "" : "s"}
+          {count} MR{count === 1 ? '' : 's'}
         </span>
         {node.cyclic && (
-          <span className="chip bg-amber-500/10 text-amber-300 border-amber-500/30">
-            cycle
-          </span>
+          <span className="chip bg-amber-500/10 text-amber-300 border-amber-500/30">cycle</span>
         )}
       </button>
       {open && (

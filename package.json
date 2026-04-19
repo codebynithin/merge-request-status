@@ -10,23 +10,47 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host --port 5173",
     "start": "npm run build && npm run preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,scss,css,json,md}\" \"*.{json,md,cjs,ts}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,scss,css,json,md}\" \"*.{json,md,cjs,ts}\"",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ],
+    "*.{js,cjs,mjs,json,md,scss,css,html}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
-    "axios": "^1.7.7",
-    "lucide-react": "^0.446.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "axios": "~1.7.7",
+    "lucide-react": "~0.446.0",
+    "react": "~18.3.1",
+    "react-dom": "~18.3.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.10",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "sass": "^1.79.4",
-    "tailwindcss": "^3.4.13",
-    "typescript": "^5.6.2",
-    "vite": "^5.4.8"
+    "@types/react": "~18.3.10",
+    "@types/react-dom": "~18.3.0",
+    "@typescript-eslint/eslint-plugin": "~7.18.0",
+    "@typescript-eslint/parser": "~7.18.0",
+    "@vitejs/plugin-react": "~4.3.1",
+    "autoprefixer": "~10.4.20",
+    "eslint": "~8.57.1",
+    "eslint-config-prettier": "~9.1.0",
+    "eslint-plugin-react": "~7.37.1",
+    "eslint-plugin-react-hooks": "~4.6.2",
+    "eslint-plugin-react-refresh": "~0.4.12",
+    "husky": "~9.1.6",
+    "lint-staged": "~15.2.10",
+    "postcss": "~8.4.47",
+    "prettier": "~3.3.3",
+    "sass": "~1.79.4",
+    "tailwindcss": "~3.4.13",
+    "typescript": "~5.6.2",
+    "vite": "~5.4.8"
   }
 }

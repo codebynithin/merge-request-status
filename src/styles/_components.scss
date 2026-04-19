@@ -1,4 +1,4 @@
-@use "variables" as *;
+@use 'variables' as *;
 
 .branch-node {
   position: relative;
@@ -40,11 +40,7 @@
 }
 
 .panel {
-  background: linear-gradient(
-    180deg,
-    rgba(15, 23, 42, 0.6) 0%,
-    rgba(15, 23, 42, 0.35) 100%
-  );
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.35) 100%);
   border: 1px solid rgba(148, 163, 184, 0.12);
   border-radius: 14px;
   backdrop-filter: blur(6px);
