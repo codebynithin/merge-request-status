@@ -34,6 +34,17 @@ npm run build              # production bundle in ./dist
 
 Open http://localhost:5173, enter your GitLab URL (defaults to `https://gitlab.com`) and a personal access token (`User Settings → Access Tokens`, scope `read_api`).
 
+## Deploy to GitHub Pages
+
+A workflow at `@/.github/workflows/deploy.yml` builds and deploys to the `gh-pages` branch on every push to `master`/`main`.
+
+One-time setup in your GitHub repo:
+
+1. **Settings → Pages → Build and deployment → Source** → **Deploy from a branch**
+2. **Branch** → `gh-pages` → `/ (root)` → **Save**
+
+The site will be served at `https://<user>.github.io/<repo>/`. The workflow automatically injects `VITE_BASE=/<repo>/` so asset paths resolve correctly, and copies `index.html` to `404.html` for SPA-style fallback.
+
 ## CORS note
 
 - `gitlab.com` enables CORS on its API by default — works out of the box.
